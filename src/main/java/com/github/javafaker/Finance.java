@@ -1,6 +1,9 @@
 package com.github.javafaker;
 
 import org.apache.commons.lang3.StringUtils;
+import org.iban4j.CountryCode;
+import org.iban4j.Iban;
+import org.iban4j.IbanUtil;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -65,7 +68,22 @@ public class Finance {
         String checkSum = calculateIbanChecksum(countryCode, basicBankAccountNumber);
         return countryCode + checkSum + basicBankAccountNumber;
     }
-
+    
+    public String iban(String countryCode, String bankCode, String accountNumber){
+        return new Iban.Builder()
+                .countryCode(CountryCode.getByCode(countryCode))
+                .bankCode(bankCode)
+                .accountNumber(accountNumber)
+                .buildRandom()
+                .toString();
+    }
+    public String iban(String countryCode, String bankCode){
+        return new Iban.Builder()
+                .countryCode(CountryCode.getByCode(countryCode))
+                .bankCode(bankCode)
+                .buildRandom()
+                .toString();
+    }
     private CreditCardType randomCreditCardType() {
         return CreditCardType.values()[this.faker.random().nextInt(CreditCardType.values().length)];
     }

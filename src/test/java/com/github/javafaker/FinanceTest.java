@@ -37,6 +37,18 @@ public class FinanceTest extends AbstractFakerTest {
         assertThat(faker.finance().iban("DE"), matchesRegularExpression("DE\\d{20}"));
     }
 
+
+    @Test
+    public void ibanWithCountryCodeAndBankCode() {
+        assertThat(faker.finance().iban("DE", "10070124"), matchesRegularExpression("DE(\\d{2})(?:10070124)(\\d{10})"));
+    }
+
+    @Test
+    public void ibanWithCountryCodeBankCodeAndAccountNumber() {
+        assertThat(faker.finance().iban("DE", "10070124", "8879085778"), matchesRegularExpression("DE(\\d{2})(?:10070124)(\\d{10})"));
+    }
+
+
     @Test
     public void creditCardWithType() {
         for(CreditCardType type : CreditCardType.values()) {
